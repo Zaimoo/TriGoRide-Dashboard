@@ -1,16 +1,16 @@
 // src/firebase.js
 import { initializeApp } from "firebase/app";
 import { getAnalytics } from "firebase/analytics";
-import { getFirestore } from "firebase/firestore"; // ← ADD THIS
+import { getFirestore } from "firebase/firestore";
 
 const firebaseConfig = {
-  apiKey: "AIzaSyDV91TNCfyFbQkrZ4OyDBHvqlBWx60jy5E",
-  authDomain: "trigoride-ee892.firebaseapp.com",
-  projectId: "trigoride-ee892",
-  storageBucket: "trigoride-ee892.appspot.com",
-  messagingSenderId: "57222648824",
-  appId: "1:57222648824:web:b01a7fd20a2ce461e6fc0d",
-  measurementId: "G-MYP3V1HR0V",
+	apiKey: import.meta.env.VITE_FIREBASE_API_KEY,
+	authDomain: import.meta.env.VITE_FIREBASE_AUTH_DOMAIN,
+	projectId: import.meta.env.VITE_FIREBASE_PROJECT_ID,
+	storageBucket: import.meta.env.VITE_FIREBASE_STORAGE_BUCKET,
+	messagingSenderId: import.meta.env.VITE_FIREBASE_MESSAGING_SENDER_ID,
+	appId: import.meta.env.VITE_FIREBASE_APP_ID,
+	measurementId: import.meta.env.VITE_FIREBASE_MEASUREMENT_ID,
 };
 
 // Initialize Firebase
