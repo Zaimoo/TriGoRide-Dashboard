@@ -81,7 +81,7 @@ const Verification = () => {
                       <th
                         key={th}
                         scope="col"
-                        className="px-6 py-3 text-left text-xs font-medium text-white uppercase tracking-wider"
+                        className="px-6 py-3 text-left text-xs font-medium text-black uppercase tracking-wider"
                       >
                         {th}
                       </th>

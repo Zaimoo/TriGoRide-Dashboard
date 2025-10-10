@@ -513,114 +513,6 @@ const Reports = () => {
         </div>
       </div>
 
-      {/* RIDE VOLUME & USAGE */}
-      <div className="bg-white shadow rounded-lg p-6 space-y-6">
-        <h2 className="text-lg font-semibold">Ride Volume & Usage</h2>
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-          <div className="h-48">
-            <p className="text-gray-600 mb-2 text-sm">Completed Rides</p>
-            <ResponsiveContainer width="100%" height="80%">
-              <LineChart data={dailyCompleted}>
-                <XAxis dataKey="date" tick={{ fontSize: 10 }} />
-                <YAxis allowDecimals={false} />
-                <Tooltip />
-                <Line dataKey="count" stroke="#FF9800" />
-              </LineChart>
-            </ResponsiveContainer>
-          </div>
-          <div className="h-48">
-            <p className="text-gray-600 mb-2 text-sm">Cancelled Rides</p>
-            <ResponsiveContainer width="100%" height="80%">
-              <LineChart data={dailyCancelled}>
-                <XAxis dataKey="date" tick={{ fontSize: 10 }} />
-                <YAxis allowDecimals={false} />
-                <Tooltip />
-                <Line dataKey="count" stroke="#F57C00" />
-              </LineChart>
-            </ResponsiveContainer>
-          </div>
-        </div>
-      </div>
-
-      {/* PEAK HOURS */}
-      <div className="bg-white shadow rounded-lg p-6">
-        <h2 className="text-lg font-semibold mb-4">Peak Booking Hours</h2>
-        <div className="h-48">
-          <ResponsiveContainer width="100%" height="100%">
-            <BarChart data={peakHours}>
-              <CartesianGrid strokeDasharray="3 3" />
-              <XAxis dataKey="hour" tickFormatter={(h) => `${h}:00`} />
-              <YAxis allowDecimals={false} />
-              <Tooltip labelFormatter={(h) => `${h}:00`} />
-              <Bar dataKey="count" fill="#FF9800" />
-            </BarChart>
-          </ResponsiveContainer>
-        </div>
-      </div>
-
-      {/* DRIVER PERFORMANCE */}
-      <div className="bg-white shadow rounded-lg p-6 space-y-6">
-        <h2 className="text-lg font-semibold">Driver Performance</h2>
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-          <div className="h-48">
-            <p className="text-gray-600 mb-2 text-sm">Avg Driver Rating</p>
-            {ratingsData.length ? (
-              <ResponsiveContainer width="100%" height="80%">
-                <BarChart data={ratingsData}>
-                  <XAxis dataKey="username" tick={{ fontSize: 10 }} />
-                  <YAxis domain={[0, 5]} allowDecimals={false} />
-                  <Tooltip formatter={(v) => v.toFixed(2)} />
-                  <Bar dataKey="average" fill="#FF9800" />
-                </BarChart>
-              </ResponsiveContainer>
-            ) : (
-              <div className="h-full flex items-center justify-center text-gray-500">
-                No rating data.
-              </div>
-            )}
-          </div>
-        </div>
-      </div>
-
-      {/* USER GROWTH & ENGAGEMENT */}
-      <div className="bg-white shadow rounded-lg p-6 space-y-6">
-        <h2 className="text-lg font-semibold">User Growth & Engagement</h2>
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-          <div className="h-48">
-            <div className="w-full h-48">
-              <h3 className="font-semibold text-gray-700 mb-2">User Signups</h3>
-              <ResponsiveContainer width="100%" height="80%">
-                <LineChart data={userSignupsData}>
-                  <XAxis dataKey="date" tick={{ fontSize: 10 }} />
-                  <YAxis allowDecimals={false} />
-                  <Tooltip
-                    labelFormatter={(label) => `Date: ${label}`}
-                    formatter={(value) => [`${value}`, "Count"]}
-                  />
-                  <Line
-                    type="monotone"
-                    dataKey="count"
-                    stroke="#FF9800"
-                    dot={false}
-                  />
-                </LineChart>
-              </ResponsiveContainer>
-            </div>
-          </div>
-          <div className="h-48">
-            <p className="text-gray-600 mb-2 text-sm">Active Users</p>
-            <ResponsiveContainer width="100%" height="80%">
-              <LineChart data={activeUsersData}>
-                <XAxis dataKey="date" tick={{ fontSize: 10 }} />
-                <YAxis allowDecimals={false} />
-                <Tooltip />
-                <Line dataKey="count" stroke="#FF9800" />
-              </LineChart>
-            </ResponsiveContainer>
-          </div>
-        </div>
-      </div>
-
       {/* DRIVER SERVICE FEES SECTION */}
       <div className="bg-white shadow-lg rounded-lg p-6">
         <h2 className="text-lg font-semibold mb-6" style={{ color: "#FF9800" }}>
@@ -961,6 +853,114 @@ const Reports = () => {
             </div>
           </div>
         )}
+      </div>
+
+      {/* RIDE VOLUME & USAGE */}
+      <div className="bg-white shadow rounded-lg p-6 space-y-6">
+        <h2 className="text-lg font-semibold">Ride Volume & Usage</h2>
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+          <div className="h-48">
+            <p className="text-gray-600 mb-2 text-sm">Completed Rides</p>
+            <ResponsiveContainer width="100%" height="80%">
+              <LineChart data={dailyCompleted}>
+                <XAxis dataKey="date" tick={{ fontSize: 10 }} />
+                <YAxis allowDecimals={false} />
+                <Tooltip />
+                <Line dataKey="count" stroke="#FF9800" />
+              </LineChart>
+            </ResponsiveContainer>
+          </div>
+          <div className="h-48">
+            <p className="text-gray-600 mb-2 text-sm">Cancelled Rides</p>
+            <ResponsiveContainer width="100%" height="80%">
+              <LineChart data={dailyCancelled}>
+                <XAxis dataKey="date" tick={{ fontSize: 10 }} />
+                <YAxis allowDecimals={false} />
+                <Tooltip />
+                <Line dataKey="count" stroke="#F57C00" />
+              </LineChart>
+            </ResponsiveContainer>
+          </div>
+        </div>
+      </div>
+
+      {/* PEAK HOURS */}
+      <div className="bg-white shadow rounded-lg p-6">
+        <h2 className="text-lg font-semibold mb-4">Peak Booking Hours</h2>
+        <div className="h-48">
+          <ResponsiveContainer width="100%" height="100%">
+            <BarChart data={peakHours}>
+              <CartesianGrid strokeDasharray="3 3" />
+              <XAxis dataKey="hour" tickFormatter={(h) => `${h}:00`} />
+              <YAxis allowDecimals={false} />
+              <Tooltip labelFormatter={(h) => `${h}:00`} />
+              <Bar dataKey="count" fill="#FF9800" />
+            </BarChart>
+          </ResponsiveContainer>
+        </div>
+      </div>
+
+      {/* DRIVER PERFORMANCE */}
+      <div className="bg-white shadow rounded-lg p-6 space-y-6">
+        <h2 className="text-lg font-semibold">Driver Performance</h2>
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+          <div className="h-48">
+            <p className="text-gray-600 mb-2 text-sm">Avg Driver Rating</p>
+            {ratingsData.length ? (
+              <ResponsiveContainer width="100%" height="80%">
+                <BarChart data={ratingsData}>
+                  <XAxis dataKey="username" tick={{ fontSize: 10 }} />
+                  <YAxis domain={[0, 5]} allowDecimals={false} />
+                  <Tooltip formatter={(v) => v.toFixed(2)} />
+                  <Bar dataKey="average" fill="#FF9800" />
+                </BarChart>
+              </ResponsiveContainer>
+            ) : (
+              <div className="h-full flex items-center justify-center text-gray-500">
+                No rating data.
+              </div>
+            )}
+          </div>
+        </div>
+      </div>
+
+      {/* USER GROWTH & ENGAGEMENT */}
+      <div className="bg-white shadow rounded-lg p-6 space-y-6">
+        <h2 className="text-lg font-semibold">User Growth & Engagement</h2>
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+          <div className="h-48">
+            <div className="w-full h-48">
+              <h3 className="font-semibold text-gray-700 mb-2">User Signups</h3>
+              <ResponsiveContainer width="100%" height="80%">
+                <LineChart data={userSignupsData}>
+                  <XAxis dataKey="date" tick={{ fontSize: 10 }} />
+                  <YAxis allowDecimals={false} />
+                  <Tooltip
+                    labelFormatter={(label) => `Date: ${label}`}
+                    formatter={(value) => [`${value}`, "Count"]}
+                  />
+                  <Line
+                    type="monotone"
+                    dataKey="count"
+                    stroke="#FF9800"
+                    dot={false}
+                  />
+                </LineChart>
+              </ResponsiveContainer>
+            </div>
+          </div>
+          <div className="h-48">
+            <p className="text-gray-600 mb-2 text-sm">Active Users</p>
+            <ResponsiveContainer width="100%" height="80%">
+              <LineChart data={activeUsersData}>
+                <XAxis dataKey="date" tick={{ fontSize: 10 }} />
+                <YAxis allowDecimals={false} />
+                <Tooltip />
+                <Line dataKey="count" stroke="#FF9800" />
+              </LineChart>
+            </ResponsiveContainer>
+          </div>
+        </div>
       </div>
     </div>
   );
