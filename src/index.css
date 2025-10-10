@@ -1,1 +1,59 @@
 @import "tailwindcss";
+
+/* TriGoRide Orange Theme Variables */
+:root {
+  --primary-orange: #ff9800;
+  --primary-orange-dark: #f57c00;
+  --primary-orange-darker: #e65100;
+  --primary-orange-light: #ffb74d;
+  --primary-orange-lightest: #fff3e0;
+}
+
+/* Custom utility classes for orange theme */
+.bg-primary-orange {
+  background-color: var(--primary-orange);
+}
+
+.bg-primary-orange-dark {
+  background-color: var(--primary-orange-dark);
+}
+
+.bg-primary-orange-darker {
+  background-color: var(--primary-orange-darker);
+}
+
+.bg-primary-orange-light {
+  background-color: var(--primary-orange-light);
+}
+
+.bg-primary-orange-lightest {
+  background-color: var(--primary-orange-lightest);
+}
+
+.text-primary-orange {
+  color: var(--primary-orange);
+}
+
+.text-primary-orange-dark {
+  color: var(--primary-orange-dark);
+}
+
+.text-primary-orange-darker {
+  color: var(--primary-orange-darker);
+}
+
+.border-primary-orange {
+  border-color: var(--primary-orange);
+}
+
+.hover\:bg-primary-orange-dark:hover {
+  background-color: var(--primary-orange-dark);
+}
+
+.focus\:border-primary-orange:focus {
+  border-color: var(--primary-orange);
+}
+
+.focus\:ring-primary-orange:focus {
+  --tw-ring-color: var(--primary-orange);
+}

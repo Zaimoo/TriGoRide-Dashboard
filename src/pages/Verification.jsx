@@ -54,7 +54,7 @@ const Verification = () => {
       {/* Header */}
       <div className="flex items-center justify-between mb-6">
         <div>
-          <h1 className="text-3xl font-bold text-gray-800">
+          <h1 className="text-3xl font-bold text-primary">
             Driver Verification
           </h1>
           <p className="text-gray-600">
@@ -74,14 +74,14 @@ const Verification = () => {
         ) : (
           <div className="overflow-x-auto">
             <table className="min-w-full divide-y divide-gray-200">
-              <thead className="bg-gray-50">
+              <thead className="bg-primary-light">
                 <tr>
                   {["Username", "Email", "Phone", "Plate Number", "Action"].map(
                     (th) => (
                       <th
                         key={th}
                         scope="col"
-                        className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                        className="px-6 py-3 text-left text-xs font-medium text-white uppercase tracking-wider"
                       >
                         {th}
                       </th>
@@ -119,7 +119,7 @@ const Verification = () => {
                             ${
                               isUpdating
                                 ? "bg-gray-300 text-gray-700 cursor-not-allowed"
-                                : "bg-green-600 text-white hover:bg-green-700 focus:ring-green-500"
+                                : "bg-primary-orange text-white hover:bg-primary-orange-dark focus:ring-orange-500"
                             }
                           `}
                         >

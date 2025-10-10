@@ -1,1 +1,56 @@
 @import "tailwindcss";
+
+/* TriGoRide Orange Theme Styles */
+.orange-gradient {
+  background: linear-gradient(135deg, #ff9800 0%, #f57c00 100%);
+}
+
+.orange-button {
+  background-color: #ff9800;
+  color: white;
+  transition: background-color 0.2s ease;
+}
+
+.orange-button:hover {
+  background-color: #f57c00;
+}
+
+.orange-button:active {
+  background-color: #e65100;
+}
+
+.orange-text {
+  color: #ff9800;
+}
+
+.orange-border {
+  border-color: #ff9800;
+}
+
+.orange-focus:focus {
+  border-color: #ff9800;
+  box-shadow: 0 0 0 3px rgba(255, 152, 0, 0.1);
+}
+
+/* Sidebar specific styles */
+.sidebar-nav-item {
+  transition: all 0.2s ease;
+}
+
+.sidebar-nav-item:hover {
+  background-color: rgba(245, 124, 0, 0.1);
+}
+
+.sidebar-nav-item.active {
+  background-color: #e65100;
+  color: white;
+}
+
+/* Chart colors for orange theme */
+.recharts-line {
+  stroke: #ff9800 !important;
+}
+
+.recharts-bar {
+  fill: #ff9800 !important;
+}

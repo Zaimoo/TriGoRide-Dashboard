@@ -32,7 +32,9 @@ const Passengers = () => {
 
   return (
     <div className="bg-white shadow rounded-lg p-6">
-      <h2 className="text-xl font-semibold mb-4">Passengers</h2>
+      <h2 className="text-xl font-semibold mb-4" style={{ color: "#FF9800" }}>
+        Passengers
+      </h2>
 
       <div className="overflow-x-auto">
         <table className="min-w-full divide-y divide-gray-200 text-sm">
