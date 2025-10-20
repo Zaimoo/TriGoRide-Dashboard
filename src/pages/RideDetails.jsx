@@ -16,6 +16,38 @@ const RideDetails = () => {
   const { id } = useParams();
   const [ride, setRide] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [distanceKm, setDistanceKm] = useState(null);
+  // Haversine formula to calculate distance between two lat/lng points
+  function haversineDistance(lat1, lon1, lat2, lon2) {
+    const toRad = (x) => (x * Math.PI) / 180;
+    const R = 6371; // km
+    const dLat = toRad(lat2 - lat1);
+    const dLon = toRad(lon2 - lon1);
+    const a =
+      Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+      Math.cos(toRad(lat1)) *
+        Math.cos(toRad(lat2)) *
+        Math.sin(dLon / 2) *
+        Math.sin(dLon / 2);
+    const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+    return R * c;
+  }
+
+  // Geocode an address using OpenStreetMap Nominatim
+  async function geocodeAddress(address) {
+    const url = `https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(
+      address
+    )}`;
+    const res = await fetch(url);
+    const data = await res.json();
+    if (data && data.length > 0) {
+      return {
+        lat: parseFloat(data[0].lat),
+        lon: parseFloat(data[0].lon),
+      };
+    }
+    return null;
+  }
 
   // Function to generate and download PDF receipt
   const downloadReceipt = () => {
@@ -219,6 +251,56 @@ const RideDetails = () => {
         }
 
         setRide({ ...data, assignedRiderName });
+
+        // If distance is not present, calculate it using geopoints or geocoding
+        if (!data._distanceM && (data.pickUp || data.dropOff)) {
+          // Use GeoPoint fields if available (pickUp, dropOff)
+          const pickupGeo = data.pickUp;
+          const dropoffGeo = data.dropOff;
+          if (
+            pickupGeo &&
+            dropoffGeo &&
+            pickupGeo.latitude != null &&
+            pickupGeo.longitude != null &&
+            dropoffGeo.latitude != null &&
+            dropoffGeo.longitude != null
+          ) {
+            const dist = haversineDistance(
+              pickupGeo.latitude,
+              pickupGeo.longitude,
+              dropoffGeo.latitude,
+              dropoffGeo.longitude
+            );
+            setDistanceKm(dist);
+          } else if (data.pickUpAddress && data.dropOffAddress) {
+            // Fallback to geocoding if geopoints are not valid
+            try {
+              const [pickup, dropoff] = await Promise.all([
+                geocodeAddress(data.pickUpAddress),
+                geocodeAddress(data.dropOffAddress),
+              ]);
+              if (pickup && dropoff) {
+                const dist = haversineDistance(
+                  pickup.lat,
+                  pickup.lon,
+                  dropoff.lat,
+                  dropoff.lon
+                );
+                setDistanceKm(dist);
+              } else {
+                setDistanceKm(null);
+              }
+            } catch (geoErr) {
+              setDistanceKm(null);
+            }
+          } else {
+            setDistanceKm(null);
+          }
+        } else if (data._distanceM) {
+          setDistanceKm(data._distanceM / 1000);
+        } else {
+          setDistanceKm(null);
+        }
       } catch (err) {
         console.error(err);
       } finally {
@@ -226,6 +308,7 @@ const RideDetails = () => {
       }
     };
     fetchRide();
+    // eslint-disable-next-line
   }, [id]);
 
   if (loading) return <p className="text-center mt-10">Loading...</p>;
@@ -237,6 +320,20 @@ const RideDetails = () => {
         .toDate()
         .toLocaleString(undefined, { dateStyle: "medium", timeStyle: "short" })
     : ride.dateBooked;
+  const completedAt = ride.dateCompleted?.toDate
+    ? ride.dateCompleted
+        .toDate()
+        .toLocaleString(undefined, { dateStyle: "medium", timeStyle: "short" })
+    : ride.dateCompleted;
+
+  // Calculate fare breakdown
+  const dist = distanceKm != null ? distanceKm : 0;
+  const raw = dist / 2;
+  const baseFare = raw < 1 ? 15 : 15 + raw * 1.5;
+  const serviceFee = baseFare * 0.1;
+  const specialAmount = ride.specialAmount || 0;
+  let totalFare = baseFare + serviceFee;
+  if (ride.priorityType === "special") totalFare += specialAmount;
 
   // Status badge
   const statusColors = {
@@ -257,7 +354,7 @@ const RideDetails = () => {
         }}
       >
         <h1 className="text-3xl font-bold">Ride Details</h1>
-        <p className="mt-1 text-opacity-90">Booking ID: {ride.id}</p>
+        <p className="mt-1 text-opacity-90">Ride ID: {ride.id}</p>
       </div>
       <div className="p-6 space-y-6">
         <dl className="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-4">
@@ -265,6 +362,31 @@ const RideDetails = () => {
           <div>
             <dt className="text-sm font-medium text-gray-500">Passenger</dt>
             <dd className="mt-1 text-lg text-gray-900">{ride.passenger}</dd>
+          </div>
+          {/* Driver */}
+          <div>
+            <dt className="text-sm font-medium text-gray-500">Driver</dt>
+            <dd className="mt-1 text-lg text-gray-900">
+              {ride.assignedRiderName}
+            </dd>
+          </div>
+          {/* Route */}
+          <div className="sm:col-span-2">
+            <dt className="text-sm font-medium text-gray-500">Route</dt>
+            <dd className="mt-1 text-gray-900">
+              <span className="block">From: {ride.pickUpAddress || "—"}</span>
+              <span className="block">To: {ride.dropOffAddress || "—"}</span>
+            </dd>
+          </div>
+          {/* Priority */}
+          <div>
+            <dt className="text-sm font-medium text-gray-500">Priority</dt>
+            <dd className="mt-1 text-gray-900">
+              {ride.priorityType
+                ? ride.priorityType.charAt(0).toUpperCase() +
+                  ride.priorityType.slice(1)
+                : "Regular"}
+            </dd>
           </div>
           {/* Status */}
           <div>
@@ -277,41 +399,58 @@ const RideDetails = () => {
               </span>
             </dd>
           </div>
-          {/* Date Booked */}
+          {/* Distance */}
           <div>
-            <dt className="text-sm font-medium text-gray-500">Date Booked</dt>
-            <dd className="mt-1 text-gray-900">{bookedAt || "—"}</dd>
-          </div>
-          {/* Fare */}
-          <div>
-            <dt className="text-sm font-medium text-gray-500">Fare</dt>
+            <dt className="text-sm font-medium text-gray-500">Distance</dt>
             <dd className="mt-1 text-gray-900">
-              {ride.fare != null ? `₱${parseFloat(ride.fare).toFixed(2)}` : "—"}
+              {distanceKm == null
+                ? "Calculating..."
+                : `${distanceKm.toFixed(2)} km`}
             </dd>
           </div>
-          {/* Pickup Address */}
-          <div className="sm:col-span-2">
+          {/* Date/Time */}
+          <div>
             <dt className="text-sm font-medium text-gray-500">
-              Pickup Address
+              Date/Time Booked
             </dt>
-            <dd className="mt-1 text-gray-900">{ride.pickUpAddress || "—"}</dd>
+            <dd className="mt-1 text-gray-900">{bookedAt || "—"}</dd>
           </div>
-          {/* Dropoff Address */}
-          <div className="sm:col-span-2">
+          {/* Completion Date/Time */}
+          <div>
             <dt className="text-sm font-medium text-gray-500">
-              Dropoff Address
+              Completion Date/Time
             </dt>
-            <dd className="mt-1 text-gray-900">{ride.dropOffAddress || "—"}</dd>
+            <dd className="mt-1 text-gray-900">{completedAt || "—"}</dd>
           </div>
-          {/* Assigned Rider */}
-          <div className="sm:col-span-2">
-            <dt className="text-sm font-medium text-gray-500">
-              Assigned Rider
-            </dt>
-            <dd className="mt-1 text-gray-900">{ride.assignedRiderName}</dd>
+          {/* Base Fare */}
+          <div>
+            <dt className="text-sm font-medium text-gray-500">Base Fare</dt>
+            <dd className="mt-1 text-gray-900">₱{baseFare.toFixed(2)}</dd>
+          </div>
+          {/* Service Fee */}
+          <div>
+            <dt className="text-sm font-medium text-gray-500">Service Fee</dt>
+            <dd className="mt-1 text-gray-900">₱{serviceFee.toFixed(2)}</dd>
+          </div>
+          {/* Special Amount (if any) */}
+          {specialAmount > 0 && (
+            <div>
+              <dt className="text-sm font-medium text-gray-500">
+                Special Amount
+              </dt>
+              <dd className="mt-1 text-gray-900">
+                ₱{specialAmount.toFixed(2)}
+              </dd>
+            </div>
+          )}
+          {/* Total Fare */}
+          <div>
+            <dt className="text-sm font-medium text-gray-500">Total Fare</dt>
+            <dd className="mt-1 text-gray-900">₱{totalFare.toFixed(2)}</dd>
           </div>
         </dl>
 
+        {/* Actions */}
         <div className="flex gap-3">
           <button
             onClick={() => window.history.back()}

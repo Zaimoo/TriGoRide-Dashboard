@@ -96,7 +96,7 @@ const App = () => {
             <ul className="space-y-4">
               {[
                 ["Dashboard", "/dashboard"],
-                ["Active Rides", "/active-rides"],
+                ["Rides", "/active-rides"],
                 ["Special Rides", "/special-rides"],
                 ["Verification", "/verification"],
                 ["Drivers", "/drivers"],

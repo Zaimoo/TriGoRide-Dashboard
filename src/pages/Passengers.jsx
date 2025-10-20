@@ -31,7 +31,33 @@ const Passengers = () => {
   const currentPage = passengers.slice(start, start + PAGE_SIZE);
 
   return (
-    <div className="bg-white shadow rounded-lg p-6">
+    <div className="p-6">
+      {/* Stat Card for Total Active Passengers */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4 mb-6">
+        <div className="bg-white rounded-lg shadow p-4 flex items-center">
+          <div className="flex-shrink-0 bg-orange-100 rounded-full p-3 mr-4">
+            <svg
+              className="h-6 w-6 text-orange-500"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+              viewBox="0 0 24 24"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                d="M17 20h5v-2a4 4 0 00-3-3.87M9 20H4v-2a4 4 0 013-3.87m6 5.87v-2a4 4 0 00-3-3.87m6 5.87a4 4 0 01-3-3.87m0 0a4 4 0 013-3.87m0 0V4a4 4 0 00-8 0v8a4 4 0 003 3.87"
+              />
+            </svg>
+          </div>
+          <div>
+            <div className="text-sm text-gray-500">Total Active Passengers</div>
+            <div className="text-2xl font-bold text-gray-900">
+              {passengers.length}
+            </div>
+          </div>
+        </div>
+      </div>
       <h2 className="text-xl font-semibold mb-4" style={{ color: "#FF9800" }}>
         Passengers
       </h2>

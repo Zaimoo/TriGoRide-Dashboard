@@ -467,7 +467,7 @@ const SpecialRides = () => {
         <>
           {/* Key Metrics Cards */}
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-6 gap-6 mb-8">
-            <div className="bg-primary-orange rounded-lg shadow-lg p-6 text-white">
+            <div className="bg-gradient-to-br from-purple-500 to-purple-600 rounded-lg shadow-lg p-6 text-white hover:shadow-xl transition-shadow">
               <h3 className="text-sm font-medium opacity-90">
                 Total Special Rides
               </h3>
@@ -483,7 +483,7 @@ const SpecialRides = () => {
               </p>
             </div>
 
-            <div className="bg-primary-orange rounded-lg shadow-lg p-6 text-white">
+            <div className="bg-gradient-to-br from-blue-500 to-blue-600 rounded-lg shadow-lg p-6 text-white hover:shadow-xl transition-shadow">
               <h3 className="text-sm font-medium opacity-90">Total Revenue</h3>
               <p className="text-3xl font-bold mt-2">
                 ₱{analytics.totalRevenue.toFixed(2)}
@@ -491,7 +491,7 @@ const SpecialRides = () => {
               <p className="text-sm opacity-75 mt-1">From completed rides</p>
             </div>
 
-            <div className="bg-primary-orange rounded-lg shadow-lg p-6 text-white">
+            <div className="bg-gradient-to-br from-green-500 to-green-600 rounded-lg shadow-lg p-6 text-white hover:shadow-xl transition-shadow">
               <h3 className="text-sm font-medium opacity-90">Base Revenue</h3>
               <p className="text-3xl font-bold mt-2">
                 ₱{analytics.totalBaseRevenue.toFixed(2)}
@@ -501,7 +501,7 @@ const SpecialRides = () => {
               </p>
             </div>
 
-            <div className="bg-primary-orange rounded-lg shadow-lg p-6 text-white">
+            <div className="bg-gradient-to-br from-amber-500 to-amber-600 rounded-lg shadow-lg p-6 text-white hover:shadow-xl transition-shadow">
               <h3 className="text-sm font-medium opacity-90">Service Fees</h3>
               <p className="text-3xl font-bold mt-2">
                 ₱{analytics.totalServiceFees.toFixed(2)}
@@ -511,7 +511,7 @@ const SpecialRides = () => {
               </p>
             </div>
 
-            <div className="bg-primary-orange rounded-lg shadow-lg p-6 text-white">
+            <div className="bg-gradient-to-br from-pink-500 to-pink-600 rounded-lg shadow-lg p-6 text-white hover:shadow-xl transition-shadow">
               <h3 className="text-sm font-medium opacity-90">
                 Special Amounts
               </h3>
@@ -523,7 +523,7 @@ const SpecialRides = () => {
               </p>
             </div>
 
-            <div className="bg-primary-orange rounded-lg shadow-lg p-6 text-white">
+            <div className="bg-gradient-to-br from-indigo-500 to-indigo-600 rounded-lg shadow-lg p-6 text-white hover:shadow-xl transition-shadow">
               <h3 className="text-sm font-medium opacity-90">
                 Completion Rate
               </h3>
@@ -880,6 +880,9 @@ const SpecialRides = () => {
                     <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                       Date
                     </th>
+                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                      Actions
+                    </th>
                   </tr>
                 </thead>
                 <tbody className="bg-white divide-y divide-gray-200">
@@ -887,8 +890,6 @@ const SpecialRides = () => {
                     const rideDate = ride.dateBooked?.toDate
                       ? ride.dateBooked.toDate()
                       : new Date(ride.dateBooked);
-
-                    // Calculate fare components using business logic
                     const distanceKm = ride._distanceM
                       ? ride._distanceM / 1000
                       : 0;
@@ -900,7 +901,6 @@ const SpecialRides = () => {
                     if (ride.priorityType === "special") {
                       totalFare += specialAmount;
                     }
-
                     return (
                       <tr key={ride.id} className="hover:bg-gray-50">
                         <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
@@ -932,13 +932,7 @@ const SpecialRides = () => {
                         </td>
                         <td className="px-6 py-4 whitespace-nowrap text-sm">
                           <span
-                            className={`px-2 py-1 text-xs font-semibold rounded-full ${
-                              STATUS_COLORS[ride.status]
-                                ? `bg-${STATUS_COLORS[ride.status]}-100 text-${
-                                    STATUS_COLORS[ride.status]
-                                  }-800`
-                                : "bg-gray-100 text-gray-800"
-                            }`}
+                            className={`px-2 py-1 text-xs font-semibold rounded-full`}
                             style={{
                               backgroundColor: STATUS_COLORS[ride.status]
                                 ? `${STATUS_COLORS[ride.status]}20`
@@ -969,6 +963,14 @@ const SpecialRides = () => {
                         </td>
                         <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-700">
                           {format(rideDate, "MMM dd, yyyy HH:mm")}
+                        </td>
+                        <td className="px-6 py-4 whitespace-nowrap text-sm">
+                          <Link
+                            to={`/bookings/${ride.id}`}
+                            className="inline-flex items-center px-3 py-1 border border-transparent text-xs font-medium rounded-md text-blue-600 bg-blue-50 hover:bg-blue-100 transition-colors duration-150"
+                          >
+                            View
+                          </Link>
                         </td>
                       </tr>
                     );

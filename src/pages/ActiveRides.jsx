@@ -404,7 +404,7 @@ const ActiveRides = () => {
             </p>
           </div>
 
-          <div className="bg-primary-orange rounded-lg shadow-lg p-6 text-white">
+          <div className="bg-blue-500 rounded-lg shadow-lg p-6 text-white">
             <h3 className="text-sm font-medium opacity-90">Total Revenue</h3>
             <p className="text-3xl font-bold mt-2">
               ₱{analytics.totalRevenue.toFixed(2)}
@@ -412,7 +412,7 @@ const ActiveRides = () => {
             <p className="text-sm opacity-75 mt-1">From completed rides only</p>
           </div>
 
-          <div className="bg-primary-orange rounded-lg shadow-lg p-6 text-white">
+          <div className="bg-green-500 rounded-lg shadow-lg p-6 text-white">
             <h3 className="text-sm font-medium opacity-90">Company Revenue</h3>
             <p className="text-3xl font-bold mt-2">
               ₱{analytics.companyRevenue.toFixed(2)}
@@ -420,7 +420,7 @@ const ActiveRides = () => {
             <p className="text-sm opacity-75 mt-1">Service fees (10%)</p>
           </div>
 
-          <div className="bg-primary-orange rounded-lg shadow-lg p-6 text-white">
+          <div className="bg-purple-500 rounded-lg shadow-lg p-6 text-white">
             <h3 className="text-sm font-medium opacity-90">Driver Revenue</h3>
             <p className="text-3xl font-bold mt-2">
               ₱{analytics.driverRevenue.toFixed(2)}
@@ -428,7 +428,7 @@ const ActiveRides = () => {
             <p className="text-sm opacity-75 mt-1">Base cost + specials</p>
           </div>
 
-          <div className="bg-primary-orange rounded-lg shadow-lg p-6 text-white">
+          <div className="bg-pink-500 rounded-lg shadow-lg p-6 text-white">
             <h3 className="text-sm font-medium opacity-90">Completion Rate</h3>
             <p className="text-3xl font-bold mt-2">
               {analytics.completionRate.toFixed(1)}%

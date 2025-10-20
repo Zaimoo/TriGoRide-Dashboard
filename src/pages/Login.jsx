@@ -14,7 +14,10 @@ const Login = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     // placeholder credentials
-    if (email === "admin@example.com" && password === "secret") {
+    if (
+      email === "innovisionprimetech@gmail.com" &&
+      password === "Innovision_PRIMETECH123"
+    ) {
       login();
       navigate("/dashboard", { replace: true });
     } else {
