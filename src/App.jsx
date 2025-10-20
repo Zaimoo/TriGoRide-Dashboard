@@ -90,7 +90,7 @@ const App = () => {
             className="p-6 text-2xl font-bold border-b border-orange-600"
             style={{ borderBottomColor: "#E65100" }}
           >
-            TrigoRide Admin
+            TriGoRide Admin
           </div>
           <nav className="flex-1 p-4">
             <ul className="space-y-4">
