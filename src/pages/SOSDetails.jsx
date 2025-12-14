@@ -282,6 +282,16 @@ const SOSDetails = () => {
                   {alert.driverUid || "N/A"}
                 </dd>
               </div>
+              {driver?.plateNumber && (
+                <div>
+                  <dt className="text-sm font-medium text-gray-500">
+                    Plate Number
+                  </dt>
+                  <dd className="mt-1 text-lg text-gray-900 font-mono font-semibold">
+                    {driver.plateNumber}
+                  </dd>
+                </div>
+              )}
               {driver?.phoneNumber && (
                 <div>
                   <dt className="text-sm font-medium text-gray-500">
