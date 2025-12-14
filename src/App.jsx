@@ -19,6 +19,8 @@ import Reports from "./pages/Reports";
 import Settings from "./pages/Settings";
 import RideDetails from "./pages/RideDetails";
 import Passengers from "./pages/Passengers";
+import SOS from "./pages/SOS";
+import SOSDetails from "./pages/SOSDetails";
 
 // --- Auth Context ----------------------------------------------------------
 export const AuthContext = createContext({
@@ -98,6 +100,7 @@ const App = () => {
                 ["Dashboard", "/dashboard"],
                 ["Rides", "/active-rides"],
                 ["Special Rides", "/special-rides"],
+                ["SOS Alerts", "/sos"],
                 ["Verification", "/verification"],
                 ["Drivers", "/drivers"],
                 ["Passengers", "/passengers"],
@@ -194,6 +197,22 @@ const App = () => {
             element={
               <RequireAuth>
                 <Reports />
+              </RequireAuth>
+            }
+          />
+          <Route
+            path="/sos"
+            element={
+              <RequireAuth>
+                <SOS />
+              </RequireAuth>
+            }
+          />
+          <Route
+            path="/sos/:id"
+            element={
+              <RequireAuth>
+                <SOSDetails />
               </RequireAuth>
             }
           />
