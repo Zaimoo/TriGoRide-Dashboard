@@ -21,6 +21,7 @@ import RideDetails from "./pages/RideDetails";
 import Passengers from "./pages/Passengers";
 import SOS from "./pages/SOS";
 import SOSDetails from "./pages/SOSDetails";
+import VerificationDetails from "./pages/VerificationDetails";
 
 // --- Auth Context ----------------------------------------------------------
 export const AuthContext = createContext({
@@ -181,6 +182,14 @@ const App = () => {
             element={
               <RequireAuth>
                 <Verification />
+              </RequireAuth>
+            }
+          />
+          <Route
+            path="/verification/:id"
+            element={
+              <RequireAuth>
+                <VerificationDetails />
               </RequireAuth>
             }
           />
